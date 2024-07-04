@@ -1,1 +1,198 @@
-local a,b=11,21;local c,d,e=45,os.clock(),true;for f,g in pairs(game:GetService("Workspace").Map.Stages:GetDescendants())do if g:IsA("ProximityPrompt")then g.ObjectText="Pad Number: "..tostring(g.Parent.Parent.Name)g.HoldDuration=0 end end;local h=game:GetService("VirtualUser")game:GetService("Players").LocalPlayer.Idled:connect(function()h:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)wait(1)h:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)end)local i=loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Orion/main/source'))()local j=i:MakeWindow({Name="farm"})local k=j:MakeTab({Name="Main",Icon="rbxassetid://7072718412",PremiumOnly=false})local l=j:MakeTab({Name="Delayed",Icon="rbxassetid://7072718412",PremiumOnly=false})k:AddDropdown({Name="Winner Pad number",Default="11",Options={"11","21"},Callback=function(m)a=m end})k:AddDropdown({Name="Loser Pad number",Default="21",Options={"11","21"},Callback=function(m)b=m end})k:AddButton({Name="Farm points (original)",Callback=function()loadstring(game:HttpGet("https://pastebin.com/raw/7xrgtv6z",true))()end})k:AddButton({Name="Start Farm - Winner Pad",Callback=function()loadstring(game:HttpGet("https://raw.githubusercontent.com/floppa1511/floppa1511/sss/trash",true))(tostring(a))end})k:AddButton({Name="Start Farm - Loser Pad",Callback=function()loadstring(game:HttpGet("https://raw.githubusercontent.com/floppa1511/floppa1511/sss/trash",true))(tostring(b))end})l:AddParagraph("Guide","How to use:\n1.Set the winner pad number and loser pad number in Main Tab\n2.Set ETA to script launch in seconds (position both accounts accordingly)\n3.Click Generate button, the script will then create a launch time and copy it to your clipboard (current time + ETA to launch)\n4. copy this number and paste it into the textbox on the other client (current and other)\n5.Press Confirm. The script will then wait until the time reaches the launch time, then you don't need to do anything else")l:AddSlider({Name="ETA time until launch (seconds)",Min=5,Max=120,Default=17,Color=Color3.fromRGB(255,255,255),Increment=1,ValueName="Delay (secs)",Callback=function(m)c=m end})l:AddButton({Name="Generate launch code",Callback=function()setclipboard(os.clock()+c)i:MakeNotification({Name="Copied launch code to clipboard",Content="",Image="rbxassetid://4483345998",Time=5})end})l:AddDropdown({Name="Launch Pad",Default="Winner",Options={"Loser","Winner"},Callback=function(m)if m=="Winner"then e=true else e=false end end})l:AddTextbox({Name="Launch Code",Default="Put launch time here (code)",TextDisappear=false,Callback=function(m)d=m;i:MakeNotification({Name="Set launch code",Content="launch code was set",Image="rbxassetid://4483345998",Time=5})end})l:AddButton({Name="Confirm script launch",Callback=function()task.spawn(function()while os.clock()<tonumber(d)do task.wait()end;if e then loadstring(game:HttpGet("https://raw.githubusercontent.com/floppa1511/floppa1511/sss/trash",true))(tostring(a))else loadstring(game:HttpGet("https://raw.githubusercontent.com/floppa1511/floppa1511/sss/trash",true))(tostring(b))end;i:MakeNotification({Name="Launched!",Content="Script was launched",Image="rbxassetid://4483345998",Time=5})end)end})i:Init()
+--Anti AFk
+local winner_Pad, loser_Pad = 11, 21
+local eta_launchtime, definitive_launchtime, launch_pad = 45, os.clock(), true --seconds
+
+for i, v in pairs(game:GetService("Workspace").Map.Stages:GetDescendants()) do
+    if v:IsA("ProximityPrompt") then
+        v.ObjectText = "Pad Number: " .. tostring(v.Parent.Parent.Name)
+        v.HoldDuration = 0
+    end
+end
+
+local vu = game:GetService("VirtualUser")
+game:GetService("Players").LocalPlayer.Idled:connect(
+    function()
+        vu:Button2Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+        wait(1)
+        vu:Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+    end
+)
+
+local OrionLib = loadstring(game:HttpGet(("https://raw.githubusercontent.com/shlexware/Orion/main/source")))()
+
+local Window = OrionLib:MakeWindow({Name = "farm"})
+
+local Tab =
+    Window:MakeTab(
+    {
+        Name = "Main",
+        Icon = "rbxassetid://7072718412",
+        PremiumOnly = false
+    }
+)
+
+local Tab2 =
+    Window:MakeTab(
+    {
+        Name = "Delayed",
+        Icon = "rbxassetid://7072718412",
+        PremiumOnly = false
+    }
+)
+
+Tab:AddDropdown(
+    {
+        Name = "Winner Pad number",
+        Default = "11",
+        Options = {"11", "21"},
+        Callback = function(Value)
+            winner_Pad = Value
+        end
+    }
+)
+Tab:AddDropdown(
+    {
+        Name = "Loser Pad number",
+        Default = "21",
+        Options = {"11", "21"},
+        Callback = function(Value)
+            loser_Pad = Value
+        end
+    }
+)
+
+Tab:AddButton(
+    {
+        Name = "Farm points (original)",
+        Callback = function()
+            loadstring(game:HttpGet("https://pastebin.com/raw/7xrgtv6z", true))()
+        end
+    }
+)
+
+Tab:AddButton(
+    {
+        Name = "Start Farm - Winner Pad",
+        Callback = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/floppa1511/floppa1511/sss/trash", true))(
+                tostring(winner_Pad)
+            )
+        end
+    }
+)
+
+Tab:AddButton(
+    {
+        Name = "Start Farm - Loser Pad",
+        Callback = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/floppa1511/floppa1511/sss/trash", true))(
+                tostring(loser_Pad)
+            )
+        end
+    }
+)
+
+Tab2:AddParagraph(
+    "Guide",
+    "How to use:\n1.Set the winner pad number and loser pad number in Main Tab\n2.Set ETA to script launch in seconds (position both accounts accordingly)\n3.Click Generate button, the script will then create a launch time and copy it to your clipboard (current time + ETA to launch)\n4. copy this number and paste it into the textbox on the other client (current and other)\n5.Press Confirm. The script will then wait until the time reaches the launch time, then you don't need to do anything else"
+)
+
+Tab2:AddSlider(
+    {
+        Name = "ETA time until launch (seconds)",
+        Min = 5,
+        Max = 120,
+        Default = 17,
+        Color = Color3.fromRGB(255, 255, 255),
+        Increment = 1,
+        ValueName = "Delay (secs)",
+        Callback = function(Value)
+            eta_launchtime = Value
+        end
+    }
+)
+
+Tab2:AddButton(
+    {
+        Name = "Generate launch code",
+        Callback = function()
+            --launchTimeCode:Set(os.clock() + eta_launchtime)
+            setclipboard(os.clock() + eta_launchtime)
+            OrionLib:MakeNotification(
+                {
+                    Name = "Copied launch code to clipboard",
+                    Content = "",
+                    Image = "rbxassetid://4483345998",
+                    Time = 5
+                }
+            )
+        end
+    }
+)
+
+Tab2:AddDropdown(
+    {
+        Name = "Launch Pad",
+        Default = "Winner",
+        Options = {"Loser", "Winner"},
+        Callback = function(Value)
+            if Value == "Winner" then
+                launch_pad = true
+            else
+                launch_pad = false
+            end
+        end
+    }
+)
+
+Tab2:AddTextbox(
+    {
+        Name = "Launch Code",
+        Default = "Put launch time here (code)",
+        TextDisappear = false,
+        Callback = function(Value)
+            definitive_launchtime = Value
+            OrionLib:MakeNotification(
+                {
+                    Name = "Set launch code",
+                    Content = "launch code was set",
+                    Image = "rbxassetid://4483345998",
+                    Time = 5
+                }
+            )
+        end
+    }
+)
+
+Tab2:AddButton(
+    {
+        Name = "Confirm script launch",
+        Callback = function()
+            task.spawn(
+                function()
+                    while os.clock() < tonumber(definitive_launchtime) do
+                        task.wait()
+                    end
+                    if launch_pad then
+                        loadstring(
+                            game:HttpGet("https://raw.githubusercontent.com/floppa1511/floppa1511/sss/trash", true)
+                        )(tostring(winner_Pad))
+                    else
+                        loadstring(
+                            game:HttpGet("https://raw.githubusercontent.com/floppa1511/floppa1511/sss/trash", true)
+                        )(tostring(loser_Pad))
+                    end
+                    OrionLib:MakeNotification(
+                        {
+                            Name = "Launched!",
+                            Content = "Script was launched",
+                            Image = "rbxassetid://4483345998",
+                            Time = 5
+                        }
+                    )
+                end
+            )
+        end
+    }
+)
+OrionLib:Init()

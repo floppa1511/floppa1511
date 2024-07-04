@@ -1,4 +1,4 @@
---Anti AFk
+--1111
     local winner_Pad, loser_Pad = 11, 21
     local eta_launchtime, definitive_launchtime, launch_pad = 45, os.clock(), true --seconds
 

@@ -137,7 +137,6 @@
         Tab2:AddButton({
             Name = "Confirm script launch",
             Callback = function()
-                task.spawn(function()
                     while os.clock() < tonumber(definitive_launchtime) do
                         task.wait(0.0001)
                     end
@@ -152,8 +151,67 @@
                         Image = "rbxassetid://4483345998",
                         Time = 5
                     })
-                end)
             end    
         })
         OrionLib:Init()
     
+    
+--[[
+local args = {...}
+local function fire_prompt(prompt, duration)
+    prompt:InputHoldBegin()
+    task.wait(duration or prompt.HoldDuration)
+    prompt:InputHoldEnd()
+end
+
+ while true do
+    for i,v in pairs(game:GetService("Workspace").Map.Stages:GetDescendants()) do
+       if v:IsA("ProximityPrompt") and v.Parent.Parent.Name == tostring(args[1]) then
+            fire_prompt(v)
+        end
+    end
+
+    task.wait(3)
+        
+    local ohTable1 = {
+        [1] = "Server",
+        [2] = "StageManager",
+        [3] = "Select"
+    }
+    local ohTable2 = {
+        [1] = "VSFNaF1_Beatbox", --28.3
+        [2] = "Hard"
+    }
+    game:GetService("ReplicatedStorage").RF:InvokeServer(ohTable1, ohTable2)
+
+    task.wait(2)
+
+    local ohTable1 = {
+        [1] = "Server",
+        [2] = "StageManager",
+        [3] = "Select"
+    }
+    local ohTable2 = {
+        [3] = "JudgementHall"
+    }
+    game:GetService("ReplicatedStorage").RE:FireServer(ohTable1, ohTable2)
+
+        
+    task.wait(2)
+
+    local ohTable1 = {
+        [1] = "Server",
+        [2] = "StageManager",
+        [3] = "Select"
+    }
+    local ohTable2 = {
+        [4] = "HighestScore"
+    }
+
+    game:GetService("ReplicatedStorage").RF:InvokeServer(ohTable1, ohTable2)
+        
+    task.wait(55 - (2 + 2 + 3)) --20 is intermission, modify later
+
+end
+
+]]
